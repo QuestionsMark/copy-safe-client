@@ -1,14 +1,16 @@
+import { ArrowBack } from "@mui/icons-material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { Box, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { endpoints, useApi } from "../../hooks/useApi";
 import { copyToClipboard } from "../../utils/clipboard";
 
 export const Share = () => {
 	const { loading, run } = useApi(endpoints.getShare);
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const [data, setData] = useState<{ text: string } | null>(null);
 
 	const getShare = async (id: string) => {
@@ -93,11 +95,31 @@ export const Share = () => {
 						>
 							<ContentCopyIcon />
 						</IconButton>
+						<Button
+							variant="ghost"
+							size="large"
+							startIcon={<ArrowBack />}
+							onClick={() => navigate("/")}
+							sx={{ whiteSpace: "nowrap" }}
+						>
+							Go back
+						</Button>
 					</Stack>
 				) : (
-					<Typography sx={{ textAlign: "center", opacity: 0.7 }}>
-						Nothing to display.
-					</Typography>
+					<Stack spacing={2}>
+						<Typography sx={{ textAlign: "center", opacity: 0.7 }}>
+							Nothing to display.{" "}
+						</Typography>
+						<Button
+							variant="ghost"
+							size="large"
+							startIcon={<ArrowBack />}
+							onClick={() => navigate("/")}
+							sx={{ whiteSpace: "nowrap" }}
+						>
+							Go back
+						</Button>
+					</Stack>
 				)}
 			</Grid>
 		</Box>
