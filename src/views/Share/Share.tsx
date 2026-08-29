@@ -4,6 +4,7 @@ import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { endpoints, useApi } from "../../hooks/useApi";
+import { copyToClipboard } from "../../utils/clipboard";
 
 export const Share = () => {
 	const { loading, run } = useApi(endpoints.getShare);
@@ -25,7 +26,7 @@ export const Share = () => {
 	const handleCopy = async () => {
 		if (!data) return;
 
-		await navigator.clipboard.writeText(data.text);
+		await copyToClipboard(data.text);
 		enqueueSnackbar("Skopiowano do schowka!", { variant: "success" });
 	};
 

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { API_URL } from "../../config/config";
+import { copyToClipboard } from "../utils/clipboard";
 
 export const endpoints = {
 	async share(text: string) {
@@ -15,7 +16,7 @@ export const endpoints = {
 
 		const resJson = await res.json();
 
-		await navigator.clipboard.writeText(resJson.url);
+		await copyToClipboard(resJson.url);
 
 		return resJson;
 	},
@@ -30,7 +31,7 @@ export const endpoints = {
 
 		const resJson = (await res.json()) as { text: string };
 
-		await navigator.clipboard.writeText(resJson.text);
+		await copyToClipboard(resJson.text);
 
 		return resJson;
 	},
